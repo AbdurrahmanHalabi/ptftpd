@@ -83,6 +83,7 @@ To see the available options and commands you can type ``help``:
 an example of putting a file into a tftp server with ip 192.168.1.10 is:
 
 .. code::
+
     $ python ptftplib\tftpclient.py -h 192.168.1.10 put file.bin
 
 
