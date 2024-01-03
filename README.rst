@@ -69,9 +69,9 @@ port 6969 through the eth0 network interface:
 
     $ ptftpd -p 6969 eth0 /var/lib/tftp
 
-In this version the TFTP client is an non-interactive client. 
-This way it can be used in one command line to be used in for 
-example Jenkins automation script. please clone the repository 
+In this version the TFTP client is a non-interactive client. 
+This way it can be used in one command line. it can be useful for 
+Jenkins automation script. please clone the repository 
 and use the feature by running tftpclient.py.
 To see the available options and commands you can type ``help``:
 
@@ -83,7 +83,7 @@ To see the available options and commands you can type ``help``:
 an example of putting a file into a tftp server with ip 192.168.1.10 is:
 
 .. code::
-	$ python ptftplib\tftpclient.py -h 192.168.1.10 put file.bin
+     $ python ptftplib\tftpclient.py -h 192.168.1.10 put file.bin
 
 
 PXE solution
