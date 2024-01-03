@@ -142,7 +142,7 @@ class TFTPClient(object):
 
     PTFTP_STATE = None
 
-    def __init__(self, peer, opts=None, mode='octet', rfc1350=False,
+    def __init__(self, peer, opts=None, mode='octet', rfc1350=False, input_args_count=0,
                  notification_callbacks=None):
         """
         Initializes the TFTP client.
@@ -167,6 +167,7 @@ class TFTPClient(object):
         self.rfc1350 = rfc1350
 
         self.opts = opts
+        self.input_args_count = input_args_count                                        
 
         if rfc1350:
             self.opts = _PTFTP_RFC1350_OPTS
@@ -219,7 +220,7 @@ class TFTPClient(object):
         while True:
             print()
             try:
-                command = input('tftp> ')
+                command = " ".join(sys.argv[(self.input_args_count+1):])
             except EOFError:
                 print()
                 break
@@ -707,6 +708,18 @@ def usage():
     print('To disable the use of TFTP extensions:')
     print('  -r    --rfc1350        Strictly comply to the RFC1350 only (no extensions)')
     print('                         This will discard other TFTP option values.')
+    print('Available commands:')
+    print()
+    print('?  help                  Display help')
+    print('q  quit                  Quit the TFTP client')
+    print('m  mode [newmode]        Display or change transfer mode')
+    print('b  blksize [newsize]     Display or change the transfer block size')
+    print('w  windowsize [newsize]  Display or change the transfer window size')
+    print()
+    print('g  get [-f] <filename>   Get <filename> from server.')
+    print('                         (use -f to overwrite local file)')
+    print('p  put <filename>        Push <filename> to the server')
+    print()
     print()
 
 
@@ -764,7 +777,8 @@ def main():
         if opt in ('-r', '--rfc1350'):
             rfc1350 = True
 
-    client = TFTPClient((host, port), exts, mode, rfc1350)
+    input_args_count = len(opts)*2 # multiplied y 2 to take into account the 'value' argument                                                                                                      
+    client = TFTPClient((host, port), exts, mode, rfc1350, input_args_count)
     client.serve_forever()
     print('Goodbye.')
     return 0
